@@ -5,17 +5,20 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
 
+    steps:
+      # Checkout the repo
+      - name: Checkout code
+        uses: actions/checkout@v3   # use v3, not v4
+
+      # Prime cache
       - name: prime-cache-be84816
         id: cache-step
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: ./.cache           # safe folder that exists
           key: cache-be84816
 
+      # Echo cache result
       - name: Echo cache result
         run: echo "Cache result: ${{ steps.cache-step.outputs.cache-hit }}"
